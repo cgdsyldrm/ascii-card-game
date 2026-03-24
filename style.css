@@ -36,7 +36,6 @@ body {
   flex-direction: column;
   padding: 10px 20px 6px;
   overflow: hidden;
-  border-bottom: 1px solid #2e2820;
 }
 
 #enemy-header {
@@ -63,7 +62,6 @@ body {
   padding: 2px 0;
   font-size: 12px;
   letter-spacing: 2px;
-  border-top: 1px solid #2e2820;
   border-bottom: 1px solid #2e2820;
 }
 
