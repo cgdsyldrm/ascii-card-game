@@ -15,6 +15,15 @@ describe('CARD_DEFINITIONS', () => {
       assert.ok(typeof c.toughness === 'number', `${c.name} missing toughness`);
     }
   });
+
+  it('each spell has exactly one effect key', () => {
+    const effectKeys = ['damage', 'heal', 'aoe', 'buff'];
+    const spells = CARD_DEFINITIONS.filter(c => c.type === 'spell');
+    for (const s of spells) {
+      const found = effectKeys.filter(k => k in s);
+      assert.equal(found.length, 1, `${s.name} must have exactly one effect key, got: ${found}`);
+    }
+  });
 });
 
 describe('createDeck', () => {
