@@ -29,19 +29,22 @@
     <pre id="player-board" class="board">(empty)</pre>
   </div>
 
-  <!-- ── Hand ───────────────────────────────────────────── -->
-  <div id="hand-panel">
-    <div class="dim hand-label">YOUR HAND</div>
-    <pre id="player-hand" class="board hand-board">(empty)</pre>
-  </div>
+  <!-- ── Bottom row: terminal (left) + hand (right) ───── -->
+  <div id="bottom-row">
 
-  <!-- ── Terminal log + input ───────────────────────────── -->
-  <div id="terminal-panel">
-    <div id="game-log"></div>
-    <div id="cmd-line">
-      <span class="prompt">$&gt;</span>
-      <input id="cmd" type="text" autocomplete="off" spellcheck="false" autofocus>
+    <div id="terminal-panel">
+      <div id="game-log"></div>
+      <div id="cmd-line">
+        <span class="prompt">$&gt;</span>
+        <input id="cmd" type="text" autocomplete="off" spellcheck="false" autofocus>
+      </div>
     </div>
+
+    <div id="hand-panel">
+      <div class="dim hand-label">YOUR HAND</div>
+      <pre id="player-hand" class="hand-board">(empty)</pre>
+    </div>
+
   </div>
 
   <!-- ── Game over overlay ──────────────────────────────── -->

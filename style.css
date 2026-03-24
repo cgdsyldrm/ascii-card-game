@@ -81,27 +81,38 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* ── Hand panel (fixed height, scrollable) ──────────────── */
+/* ── Bottom row ─────────────────────────────────────────── */
+#bottom-row {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Hand panel (right column) ──────────────────────────── */
 #hand-panel {
-  flex: 0 0 auto;
+  flex: 0 0 42%;
   display: flex;
   flex-direction: column;
-  padding: 6px 20px 4px;
-  border-bottom: 1px dashed #3a3228;
+  padding: 8px 16px 8px;
+  overflow: hidden;
+  border-left: 1px solid #2e2820;
 }
 
 .hand-label {
   font-size: 11px;
   letter-spacing: 1.5px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  flex-shrink: 0;
 }
 
 .hand-board {
+  flex: 1;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: pre;
   font-size: 13px;
-  padding-bottom: 4px;
 }
 
 .hand-board::-webkit-scrollbar { height: 3px; }
@@ -120,13 +131,13 @@ body {
   color: #c86858;
 }
 
-/* ── Terminal panel ─────────────────────────────────────── */
+/* ── Terminal panel (left column) ───────────────────────── */
 #terminal-panel {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  min-height: 0;
+  min-width: 0;
   background: #111;
 }
 
