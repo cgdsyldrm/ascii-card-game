@@ -38,5 +38,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`ASCII Card Game running at http://localhost:${PORT}`);
+  console.log(`Cardminal running at http://localhost:${PORT}`);
 });
