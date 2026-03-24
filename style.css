@@ -31,7 +31,7 @@ body {
 
 /* ── Enemy panel (top ~33%) ─────────────────────────────── */
 #enemy-panel {
-  flex: 0 0 32%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   padding: 10px 20px 6px;
@@ -83,7 +83,7 @@ body {
 
 /* ── Bottom row ─────────────────────────────────────────── */
 #bottom-row {
-  flex: 0 0 260px;
+  flex: 0 0 420px;
   display: flex;
   flex-direction: row;
   overflow: hidden;
