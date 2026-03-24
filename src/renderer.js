@@ -140,10 +140,22 @@ function renderZone(elementId, cards, selectable) {
 function renderPlayerHand(hand) {
   const el = document.getElementById('player-hand');
   if (hand.length === 0) {
-    el.textContent = 'YOUR HAND: (empty)';
+    el.textContent = '(empty)';
     return;
   }
-  el.textContent = `YOUR HAND:  ${hand.map((c, i) => renderHandCard(c, i)).join('   ')}`;
+
+  const cardLines = hand.map(c => renderCard(c).split('\n'));
+  const height    = cardLines[0].length;
+  const rows      = [];
+  for (let row = 0; row < height; row++) {
+    rows.push(cardLines.map(cl => cl[row]).join('  '));
+  }
+  // Index labels below
+  const cardW  = INNER + 2;
+  const labels = hand.map((_, i) => `[${i + 1}]`.padEnd(cardW)).join('  ');
+  rows.push(labels);
+
+  el.textContent = rows.join('\n');
 }
 
 export function appendLog(message) {
