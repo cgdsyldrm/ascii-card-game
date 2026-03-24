@@ -47,7 +47,7 @@ export class GameEngine {
     const [card] = this.state.player.hand.splice(idx, 1);
 
     if (card.type === 'creature') {
-      this.state.player.board.push(this._inst(card));
+      this.state.player.board.push(card); // already an _inst from hand creation
       this._log(`You played ${card.name} (${card.power}/${card.toughness}).`);
     } else {
       this._applySpell(card, 'player');
@@ -83,7 +83,7 @@ export class GameEngine {
     if (idx === -1) return;
     const [card] = this.state.ai.hand.splice(idx, 1);
     if (card.type === 'creature') {
-      this.state.ai.board.push(this._inst(card));
+      this.state.ai.board.push(card); // already an _inst from hand creation
       this._log(`AI played ${card.name} (${card.power}/${card.toughness}).`);
     } else {
       this._applySpell(card, 'ai');
@@ -127,6 +127,7 @@ export class GameEngine {
 
   // Called by main.js after AI attacks player
   resolveAICombat(attackers, blockerMap) {
+    if (this.state.phase !== 'ai-turn') return;
     for (const atk of attackers) {
       const blkId = blockerMap[atk.instanceId];
       const blk = blkId ? this.state.player.board.find(c => c.instanceId === blkId) : null;
