@@ -37,10 +37,10 @@ export class AIPlayer {
     const attackerData = attackerIds
       .map(id => state.player.board.find(c => c.instanceId === id))
       .filter(Boolean)
-      .sort((a, b) => b.currentPower - a.currentPower);
+      .sort((a, b) => (b.currentPower ?? b.power ?? 0) - (a.currentPower ?? a.power ?? 0));
 
     // Sort AI blockers by toughness descending
-    const blockers = [...state.ai.board].sort((a, b) => b.currentToughness - a.currentToughness);
+    const blockers = [...state.ai.board].sort((a, b) => (b.currentToughness ?? b.toughness ?? 0) - (a.currentToughness ?? a.toughness ?? 0));
 
     const map = {};
 
