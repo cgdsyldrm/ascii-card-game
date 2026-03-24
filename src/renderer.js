@@ -1,77 +1,113 @@
 // src/renderer.js
 
+const INNER = 13; // interior width of card box
+const SEP   = '─'.repeat(INNER);
+
 function stars(power) {
-  const count = Math.min(power, 5);
-  return '★'.repeat(count) + '☆'.repeat(5 - count);
+  const n = Math.min(Math.max(power, 0), 5);
+  return '★'.repeat(n) + '☆'.repeat(5 - n);
 }
 
+function center(s) {
+  const pad = Math.max(0, INNER - s.length);
+  const l   = Math.floor(pad / 2);
+  return ' '.repeat(l) + s + ' '.repeat(pad - l);
+}
+
+// 4 art lines per card (strings; will be centered in INNER chars)
+const CARD_ART = {
+  'forest-elf':    [ 'O',        '/|\\',     '>+---->', '/ \\'       ],
+  'stone-golem':   [ '[#####]',  '|#   #|',  '|# X #|', '[#####]'   ],
+  'fire-drake':    [ '/\\_/\\',  '( ^ ^ )',  '> ~~~ <', '/|___|\\' ],
+  'shadow-wolf':   [ '/\\ /\\',  '( o  o )', ' \\~~/ ', ' v--v '    ],
+  'iron-knight':   [ '[_____]',  '| [+] |',  '||   ||', '[=====]'   ],
+  'fireball':      [ '* . * . *','  \\|/ ',  ' FIRE ', '  /|\\ '    ],
+  'lightning':     [ '###\\',    '   \\\\',  '  ////', '###/'       ],
+  'healing-herb':  [ '( ) ( )',  ' \\||| ',  '  |||  ', ' _|||_ '   ],
+  'plague-mist':   [ '~~ ~~ ~~', ' ~~~~~~ ', '~*~~~~*', ' ~~~~~~ '  ],
+  'war-cry':       [ '! ! ! !',  ' !!!!!! ', '!+RAGE+!', ' !!!!!! ' ],
+};
+
+const FALLBACK_ART = {
+  creature: [ '/\\_/\\', '( o o )', ' > - < ', '\\_____/' ],
+  spell:    [ '* * * *', ' *   * ', '*     *', ' * * * ' ],
+};
+
 export function renderCard(card) {
-  // Returns a multi-line ASCII art string for a creature card
-  const name1 = card.name.slice(0, 9).padEnd(9);
-  const name2 = card.name.length > 9 ? card.name.slice(9, 18).padEnd(9) : '         ';
-  const pw = String(card.currentPower ?? card.power ?? 0).padStart(2);
-  const th = String(card.currentToughness ?? card.toughness ?? 0).padEnd(2);
+  const art = CARD_ART[card.id] ?? FALLBACK_ART[card.type] ?? ['', '', '', ''];
+
+  // Name line: 1 space + name padded to fill INNER
+  const nameLine = ` ${card.name.slice(0, INNER - 1).padEnd(INNER - 1)}`;
+
+  // Stats / info line
+  let infoLine;
+  if (card.type === 'creature') {
+    const pw = String(card.currentPower    ?? card.power    ?? 0);
+    const th = String(card.currentToughness ?? card.toughness ?? 0);
+    infoLine = ` ${stars(card.currentPower ?? card.power ?? 0)} ${pw}/${th}`.padEnd(INNER);
+  } else {
+    const fx = card.damage ? `-${card.damage} HP`
+      : card.heal          ? `+${card.heal} HP`
+      : card.aoe           ? `aoe -${card.aoe}`
+      : card.buff          ? `+${card.buff} PWR`
+      : '???';
+    infoLine = ` SPELL  ${fx}`.padEnd(INNER);
+  }
+
   return [
-    '┌─────────┐',
-    `│${name1}│`,
-    `│${name2}│`,
-    `│  ${stars(card.currentPower ?? card.power ?? 0)}  │`,
-    `│         │`,
-    '├─────────┤',
-    `│ ${pw} / ${th} │`,   // single-space padding = 9 chars interior (matches card width)
-    '└─────────┘',
+    `┌${SEP}┐`,
+    `│${nameLine}│`,
+    `├${SEP}┤`,
+    `│${center(art[0])}│`,
+    `│${center(art[1])}│`,
+    `│${center(art[2])}│`,
+    `│${center(art[3])}│`,
+    `├${SEP}┤`,
+    `│${infoLine}│`,
+    `└${SEP}┘`,
   ].join('\n');
 }
 
 export function renderHandCard(card, index) {
   if (card.type === 'creature') {
-    return `[${index + 1}: ${card.name} ${card.power}/${card.toughness}]`;
+    return `[${index + 1}] ${card.name} ${card.power}/${card.toughness}`;
   }
-  const effect = card.damage ? `-${card.damage}HP`
-    : card.heal ? `+${card.heal}HP`
-    : card.aoe  ? `AOE-${card.aoe}`
-    : card.buff ? `+${card.buff}PWR`
+  const fx = card.damage ? `-${card.damage}HP`
+    : card.heal          ? `+${card.heal}HP`
+    : card.aoe           ? `AOE-${card.aoe}`
+    : card.buff          ? `+${card.buff}PWR`
     : '?';
-  return `[${index + 1}: ${card.name} (${effect})]`;
+  return `[${index + 1}] ${card.name} (${fx})`;
 }
 
 export function renderBoard(state) {
-  // --- Header ---
-  document.getElementById('ai-hp').textContent = `♥ ${state.ai.hp} HP`;
-  document.getElementById('player-hp').textContent = `♥ ${state.player.hp} HP`;
-  document.getElementById('turn-num').textContent = `TURN ${state.turn}`;
+  document.getElementById('enemy-hp').textContent   = `♥ ${state.ai.hp} HP  [ENEMY]`;
+  document.getElementById('player-hp').textContent  = `♥ ${state.player.hp} HP  [YOU]`;
+  document.getElementById('turn-num').textContent   = `TURN ${state.turn}`;
 
-  // --- AI hand (hidden, show count) ---
   document.getElementById('ai-hand').textContent =
-    `AI HAND: ${state.ai.hand.length > 0 ? '[■] '.repeat(state.ai.hand.length).trim() : '(empty)'}`;
+    `AI HAND: ${state.ai.hand.length > 0
+      ? '[■] '.repeat(state.ai.hand.length).trim()
+      : '(empty)'}`;
 
-  // --- AI board ---
-  renderZone('ai-board', state.ai.board, false);
-
-  // --- Player board ---
+  renderZone('ai-board',     state.ai.board,     false);
   renderZone('player-board', state.player.board, true);
+  renderPlayerHand(state.player.hand);
 
-  // --- Player hand ---
-  renderPlayerHand(state.player.hand, state.phase);
-
-  // --- Phase label ---
   const phaseLabels = {
     play:     'PHASE: Play cards',
     attack:   'PHASE: Declare attackers',
     'ai-turn':'PHASE: AI thinking...',
-    gameover: `GAME OVER — ${state.winner === 'player' ? 'YOU WIN!' : 'YOU LOSE!'}`,
+    gameover: 'GAME OVER',
   };
   document.getElementById('phase-label').textContent = phaseLabels[state.phase] ?? '';
 
-  // --- Buttons ---
-  updateButtons(state.phase);
-
-  // --- Game over overlay ---
   const overlay = document.getElementById('gameover-overlay');
   if (state.phase === 'gameover') {
     overlay.style.display = 'flex';
-    document.getElementById('gameover-msg').textContent =
-      state.winner === 'player' ? '⚔ YOU WIN ⚔' : '☠ YOU LOSE ☠';
+    const msg = document.getElementById('gameover-msg');
+    msg.textContent = state.winner === 'player' ? 'YOU WIN' : 'YOU LOSE';
+    msg.style.color = state.winner === 'player' ? '#ddd5c5' : '#c86858';
   } else {
     overlay.style.display = 'none';
   }
@@ -83,41 +119,35 @@ function renderZone(elementId, cards, selectable) {
     el.textContent = '(empty)';
     return;
   }
-  // Render cards side by side by splitting each card into lines and zip-merging
+
   const cardLines = cards.map(c => renderCard(c).split('\n'));
-  const height = cardLines[0].length;
-  const rows = [];
+  const height    = cardLines[0].length;
+  const rows      = [];
   for (let row = 0; row < height; row++) {
     rows.push(cardLines.map(cl => cl[row]).join('  '));
   }
 
   if (selectable) {
-    // Add index labels below for player board
-    const labels = cards.map((c, i) => `[${i + 1}]`.padEnd(11)).join('  ');
+    // Index labels below player cards; each card is (INNER+2) chars wide
+    const cardW = INNER + 2;
+    const labels = cards.map((_, i) => `[${i + 1}]`.padEnd(cardW)).join('  ');
     rows.push(labels);
   }
 
   el.textContent = rows.join('\n');
 }
 
-function renderPlayerHand(hand, phase) {
+function renderPlayerHand(hand) {
   const el = document.getElementById('player-hand');
   if (hand.length === 0) {
     el.textContent = 'YOUR HAND: (empty)';
     return;
   }
-  const cards = hand.map((c, i) => renderHandCard(c, i)).join('  ');
-  el.textContent = `YOUR HAND: ${cards}`;
-}
-
-function updateButtons(phase) {
-  document.getElementById('btn-play').disabled   = phase !== 'play';
-  document.getElementById('btn-attack').disabled = phase !== 'attack';
-  document.getElementById('btn-endturn').disabled = phase !== 'play' && phase !== 'attack';
+  el.textContent = `YOUR HAND:  ${hand.map((c, i) => renderHandCard(c, i)).join('   ')}`;
 }
 
 export function appendLog(message) {
-  const log = document.getElementById('game-log');
+  const log  = document.getElementById('game-log');
   const line = document.createElement('div');
   line.textContent = `> ${message}`;
   log.appendChild(line);

@@ -2,72 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ASCII Card Game</title>
+  <title>ASCII CARD GAME</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="terminal">
 
-    <!-- Header -->
-    <div id="header" class="row space-between amber">
-      <span>⚔ ASCII CARD GAME ⚔</span>
-      <span id="turn-num">TURN 1</span>
-    </div>
-
-    <!-- HP Bar -->
-    <div class="row space-between hp-bar">
-      <span>[AI] <span id="ai-hp">♥ 20 HP</span></span>
+  <!-- ── Enemy half ─────────────────────────────────────── -->
+  <div id="enemy-panel">
+    <div id="enemy-header">
+      <span id="enemy-hp" class="crimson">♥ 20 HP  [ENEMY]</span>
       <span id="phase-label" class="amber">PHASE: Play cards</span>
-      <span><span id="player-hp">♥ 20 HP</span> [YOU]</span>
+      <span id="turn-num" class="dim">TURN 1</span>
     </div>
-
-    <div class="divider">╠══════════════════════════════════════════════════════════════╣</div>
-
-    <!-- AI section -->
-    <div id="ai-hand" class="section dim">AI HAND: [■] [■] [■]</div>
-    <div class="label amber">── AI BOARD ──────────────────────────────────────────</div>
-    <pre id="ai-board" class="board-zone">(empty)</pre>
-
-    <div class="divider center">────────────────── vs ──────────────────</div>
-
-    <!-- Player section -->
-    <div class="label amber">── YOUR BOARD ────────────────────────────────────────</div>
-    <pre id="player-board" class="board-zone">(empty)</pre>
-    <div id="player-hand" class="section">YOUR HAND: (empty)</div>
-
-    <div class="divider">╠══════════════════════════════════════════════════════════════╣</div>
-
-    <!-- Action input -->
-    <div id="input-area" class="row gap">
-      <div>
-        <div class="label amber">Card # to play:</div>
-        <input id="input-card" type="number" min="1" placeholder="1">
-      </div>
-      <div>
-        <div class="label amber">Creature #s to attack (comma-sep):</div>
-        <input id="input-attack" type="text" placeholder="1,2">
-      </div>
-    </div>
-    <div class="row gap btn-row">
-      <button id="btn-play">[ PLAY CARD ]</button>
-      <button id="btn-attack">[ ATTACK ]</button>
-      <button id="btn-endturn">[ END TURN ]</button>
-    </div>
-
-    <div class="divider">╠══════════════════════════════════════════════════════════════╣</div>
-
-    <!-- Game log -->
-    <div id="game-log"></div>
-
-    <div class="divider">╚══════════════════════════════════════════════════════════════╝</div>
-
+    <div id="ai-hand" class="dim">AI HAND: (empty)</div>
+    <pre id="ai-board" class="board crimson-board">(empty)</pre>
   </div>
 
-  <!-- Game over overlay -->
+  <!-- ── VS divider ─────────────────────────────────────── -->
+  <div id="vs-divider"><span>──────────────────── ⚔ ────────────────────</span></div>
+
+  <!-- ── Player half ────────────────────────────────────── -->
+  <div id="player-panel">
+    <pre id="player-board" class="board">(empty)</pre>
+    <div id="player-hand">YOUR HAND: (empty)</div>
+    <div id="player-footer">
+      <span id="player-hp">♥ 20 HP  [YOU]</span>
+    </div>
+  </div>
+
+  <!-- ── Terminal log + input ───────────────────────────── -->
+  <div id="terminal-panel">
+    <div id="game-log"></div>
+    <div id="cmd-line">
+      <span class="prompt">$&gt;</span>
+      <input id="cmd" type="text" autocomplete="off" spellcheck="false" autofocus>
+    </div>
+  </div>
+
+  <!-- ── Game over overlay ──────────────────────────────── -->
   <div id="gameover-overlay">
     <div id="gameover-box">
       <div id="gameover-msg">YOU WIN</div>
-      <button id="btn-restart">[ PLAY AGAIN ]</button>
+      <div class="blink dim">[ PRESS ENTER TO PLAY AGAIN ]</div>
     </div>
   </div>
 
