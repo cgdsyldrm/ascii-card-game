@@ -31,7 +31,7 @@ body {
 
 /* ── Enemy panel (top ~33%) ─────────────────────────────── */
 #enemy-panel {
-  flex: 0 0 33%;
+  flex: 0 0 30%;
   display: flex;
   flex-direction: column;
   padding: 10px 20px 6px;
@@ -67,7 +67,7 @@ body {
 
 /* ── Player board panel (~22%) ──────────────────────────── */
 #player-panel {
-  flex: 0 0 22%;
+  flex: 0 0 18%;
   display: flex;
   flex-direction: column;
   padding: 6px 20px 4px;
