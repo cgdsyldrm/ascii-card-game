@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/cards.test.js test/game.test.js test/ai.test.js"
+  }
+}

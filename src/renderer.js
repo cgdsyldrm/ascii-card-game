@@ -15,7 +15,7 @@ export function renderCard(card) {
     '┌─────────┐',
     `│${name1}│`,
     `│${name2}│`,
-    `│ ${stars(card.currentPower ?? card.power ?? 0)} │`,
+    `│  ${stars(card.currentPower ?? card.power ?? 0)}  │`,
     `│         │`,
     '├─────────┤',
     `│ ${pw} / ${th} │`,   // single-space padding = 9 chars interior (matches card width)
