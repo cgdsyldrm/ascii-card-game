@@ -6,7 +6,71 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="app">Loading...</div>
+  <div id="terminal">
+
+    <!-- Header -->
+    <div id="header" class="row space-between amber">
+      <span>⚔ ASCII CARD GAME ⚔</span>
+      <span id="turn-num">TURN 1</span>
+    </div>
+
+    <!-- HP Bar -->
+    <div class="row space-between hp-bar">
+      <span>[AI] <span id="ai-hp">♥ 20 HP</span></span>
+      <span id="phase-label" class="amber">PHASE: Play cards</span>
+      <span><span id="player-hp">♥ 20 HP</span> [YOU]</span>
+    </div>
+
+    <div class="divider">╠══════════════════════════════════════════════════════════════╣</div>
+
+    <!-- AI section -->
+    <div id="ai-hand" class="section dim">AI HAND: [■] [■] [■]</div>
+    <div class="label amber">── AI BOARD ──────────────────────────────────────────</div>
+    <pre id="ai-board" class="board-zone">(empty)</pre>
+
+    <div class="divider center">────────────────── vs ──────────────────</div>
+
+    <!-- Player section -->
+    <div class="label amber">── YOUR BOARD ────────────────────────────────────────</div>
+    <pre id="player-board" class="board-zone">(empty)</pre>
+    <div id="player-hand" class="section">YOUR HAND: (empty)</div>
+
+    <div class="divider">╠══════════════════════════════════════════════════════════════╣</div>
+
+    <!-- Action input -->
+    <div id="input-area" class="row gap">
+      <div>
+        <div class="label amber">Card # to play:</div>
+        <input id="input-card" type="number" min="1" placeholder="1">
+      </div>
+      <div>
+        <div class="label amber">Creature #s to attack (comma-sep):</div>
+        <input id="input-attack" type="text" placeholder="1,2">
+      </div>
+    </div>
+    <div class="row gap btn-row">
+      <button id="btn-play">[ PLAY CARD ]</button>
+      <button id="btn-attack">[ ATTACK ]</button>
+      <button id="btn-endturn">[ END TURN ]</button>
+    </div>
+
+    <div class="divider">╠══════════════════════════════════════════════════════════════╣</div>
+
+    <!-- Game log -->
+    <div id="game-log"></div>
+
+    <div class="divider">╚══════════════════════════════════════════════════════════════╝</div>
+
+  </div>
+
+  <!-- Game over overlay -->
+  <div id="gameover-overlay">
+    <div id="gameover-box">
+      <div id="gameover-msg">YOU WIN</div>
+      <button id="btn-restart">[ PLAY AGAIN ]</button>
+    </div>
+  </div>
+
   <script type="module" src="src/main.js"></script>
 </body>
 </html>
