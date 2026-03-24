@@ -160,13 +160,12 @@ function renderPlayerHand(hand) {
 
 export function appendLogo(lines) {
   const log = document.getElementById('game-log');
-  for (const line of lines) {
-    const el = document.createElement('div');
-    el.textContent = line;
-    el.style.color = '#c8902a';
-    el.style.lineHeight = '1.3';
-    log.appendChild(el);
-  }
+  const el  = document.createElement('pre');
+  el.textContent   = lines.join('\n');
+  el.style.color   = '#c8902a';
+  el.style.margin  = '0';
+  el.style.lineHeight = '1.3';
+  log.appendChild(el);
   log.scrollTop = log.scrollHeight;
 }
 
