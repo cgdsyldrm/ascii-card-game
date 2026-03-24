@@ -138,8 +138,10 @@ body {
   font-size: 13px;
   line-height: 1.6;
 }
-#game-log::-webkit-scrollbar { width: 3px; }
-#game-log::-webkit-scrollbar-thumb { background: #282010; }
+#game-log::-webkit-scrollbar { width: 6px; }
+#game-log::-webkit-scrollbar-track { background: #1a1612; }
+#game-log::-webkit-scrollbar-thumb { background: #4a3e2e; border-radius: 3px; }
+#game-log::-webkit-scrollbar-thumb:hover { background: #605040; }
 
 #cmd-line {
   display: flex;
