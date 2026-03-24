@@ -18,7 +18,7 @@ const server = http.createServer((req, res) => {
   const filePath = path.join(__dirname, urlPath);
 
   // Path traversal protection
-  if (!filePath.startsWith(__dirname)) {
+  if (!filePath.startsWith(__dirname + path.sep)) {
     res.writeHead(403, { 'Content-Type': 'text/plain' });
     res.end('Forbidden');
     return;
