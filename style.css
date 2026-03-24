@@ -36,7 +36,7 @@ body {
   flex-direction: column;
   padding: 10px 20px 6px;
   overflow: hidden;
-  border-bottom: 1px solid #1a1a1a;
+  border-bottom: 1px solid #2e2820;
 }
 
 #enemy-header {
@@ -45,7 +45,7 @@ body {
   align-items: baseline;
   padding-bottom: 6px;
   font-size: 13px;
-  border-bottom: 1px solid #1a1a1a;
+  border-bottom: 1px solid #3a3228;
   margin-bottom: 6px;
   letter-spacing: 0.5px;
 }
@@ -59,12 +59,12 @@ body {
 #vs-divider {
   flex: 0 0 auto;
   text-align: center;
-  color: #252015;
+  color: #3a3228;
   padding: 2px 0;
   font-size: 12px;
   letter-spacing: 2px;
-  border-top: 1px solid #181818;
-  border-bottom: 1px solid #181818;
+  border-top: 1px solid #2e2820;
+  border-bottom: 1px solid #2e2820;
 }
 
 /* ── Player board panel (~22%) ──────────────────────────── */
@@ -74,7 +74,7 @@ body {
   flex-direction: column;
   padding: 6px 20px 4px;
   overflow: hidden;
-  border-bottom: 1px solid #1a1a1a;
+  border-bottom: 1px solid #2e2820;
 }
 
 #player-footer {
@@ -89,7 +89,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 6px 20px 4px;
-  border-bottom: 1px solid #1a1a1a;
+  border-bottom: 1px solid #2e2820;
 }
 
 .hand-label {
@@ -148,7 +148,7 @@ body {
   align-items: center;
   gap: 10px;
   padding: 6px 20px 8px;
-  border-top: 1px solid #1e1a14;
+  border-top: 1px solid #2e2820;
   flex-shrink: 0;
 }
 
