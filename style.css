@@ -31,7 +31,7 @@ body {
 
 /* ── Enemy panel (top ~33%) ─────────────────────────────── */
 #enemy-panel {
-  flex: 0 0 30%;
+  flex: 0 0 32%;
   display: flex;
   flex-direction: column;
   padding: 10px 20px 6px;
@@ -67,7 +67,7 @@ body {
 
 /* ── Player board panel (~22%) ──────────────────────────── */
 #player-panel {
-  flex: 0 0 18%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   padding: 6px 20px 4px;
@@ -83,11 +83,11 @@ body {
 
 /* ── Bottom row ─────────────────────────────────────────── */
 #bottom-row {
-  flex: 1;
+  flex: 0 0 260px;
   display: flex;
   flex-direction: row;
   overflow: hidden;
-  min-height: 0;
+  border-top: 1px solid #2e2820;
 }
 
 /* ── Hand panel (right column) ──────────────────────────── */
