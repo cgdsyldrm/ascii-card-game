@@ -1,7 +1,7 @@
 // src/main.js
 import { GameEngine } from './game.js';
 import { AIPlayer } from './ai.js';
-import { renderBoard, appendLog } from './renderer.js';
+import { renderBoard, appendLog, appendLogo } from './renderer.js';
 
 const game = new GameEngine();
 const aiPlayer = new AIPlayer();
@@ -152,6 +152,17 @@ cmdInput.addEventListener('keydown', (e) => {
 
 // ── Start ───────────────────────────────────────────────────────────
 window._logLength = 0;
+
+appendLogo([
+  '',
+  '  ╔═════════════════════════════╗',
+  '  ║   ♠  C A R D M I N A L  ♦  ║',
+  '  ╠═════════════════════════════╣',
+  '  ║    ascii card game · poc    ║',
+  '  ╚═════════════════════════════╝',
+  '',
+]);
+
 game.startGame();
 appendLog('Type "help" for available commands.');
 

@@ -158,6 +158,18 @@ function renderPlayerHand(hand) {
   el.textContent = rows.join('\n');
 }
 
+export function appendLogo(lines) {
+  const log = document.getElementById('game-log');
+  for (const line of lines) {
+    const el = document.createElement('div');
+    el.textContent = line;
+    el.style.color = '#c8902a';
+    el.style.lineHeight = '1.3';
+    log.appendChild(el);
+  }
+  log.scrollTop = log.scrollHeight;
+}
+
 export function appendLog(message) {
   const log  = document.getElementById('game-log');
   const line = document.createElement('div');
