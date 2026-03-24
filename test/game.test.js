@@ -138,3 +138,39 @@ describe('advanceToPlayerTurn', () => {
     assert.doesNotThrow(() => game.advanceToPlayerTurn());
   });
 });
+
+describe('resolveCombat', () => {
+  it('unblocked attacker deals power damage to AI hp', () => {
+    const s = game.getState();
+    const atk = { instanceId: 'atk1', name: 'Wolf', currentPower: 3, currentToughness: 2 };
+    s.player.board.push(atk);
+    s.phase = 'attack';
+    game.resolveCombat([atk], { atk1: null });
+    assert.equal(game.getState().ai.hp, 17);
+  });
+
+  it('blocked attacker and blocker deal damage to each other', () => {
+    const s = game.getState();
+    const atk = { instanceId: 'atk2', name: 'Drake', currentPower: 5, currentToughness: 3 };
+    const blk = { instanceId: 'blk2', name: 'Golem', currentPower: 4, currentToughness: 5 };
+    s.player.board.push(atk);
+    s.ai.board.push(blk);
+    s.phase = 'attack';
+    game.resolveCombat([atk], { atk2: 'blk2' });
+    // Attacker takes 4 damage → dies (3-4 = -1)
+    assert.equal(game.getState().player.board.find(c => c.instanceId === 'atk2'), undefined);
+    // Blocker takes 5 damage → dies (5-5 = 0)
+    assert.equal(game.getState().ai.board.find(c => c.instanceId === 'blk2'), undefined);
+  });
+
+  it('detects win when AI hp drops to 0', () => {
+    const s = game.getState();
+    s.ai.hp = 1;
+    const atk = { instanceId: 'atk3', name: 'Drake', currentPower: 5, currentToughness: 3 };
+    s.player.board.push(atk);
+    s.phase = 'attack';
+    game.resolveCombat([atk], { atk3: null });
+    assert.equal(game.getState().phase, 'gameover');
+    assert.equal(game.getState().winner, 'player');
+  });
+});
