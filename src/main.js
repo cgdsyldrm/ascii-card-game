@@ -155,6 +155,9 @@ window._logLength = 0;
 game.startGame();
 appendLog('Type "help" for available commands.');
 
-// Re-focus input whenever the page regains focus
+// Re-focus input whenever the page regains focus or a key is pressed
 window.addEventListener('focus', () => cmdInput.focus());
 document.addEventListener('click', () => cmdInput.focus());
+document.addEventListener('keydown', (e) => {
+  if (document.activeElement !== cmdInput) cmdInput.focus();
+});
